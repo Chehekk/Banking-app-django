@@ -1,4 +1,5 @@
 from django.urls import path
+from . import views
 
 from .views import UserRegistrationView, LogoutView, UserLoginView
 
@@ -17,5 +18,8 @@ urlpatterns = [
     path(
         "register/", UserRegistrationView.as_view(),
         name="user_registration"
+    ),
+    path(
+      '', views.index, name='index'
     ),
 ]

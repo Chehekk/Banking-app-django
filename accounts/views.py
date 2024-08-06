@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.shortcuts import render
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.views import LoginView
 from django.shortcuts import HttpResponseRedirect
@@ -7,6 +8,8 @@ from django.views.generic import TemplateView, RedirectView
 
 from .forms import UserRegistrationForm, UserAddressForm
 
+def index(request):
+    return render(request, 'index.html')
 
 User = get_user_model()
 
