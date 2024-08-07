@@ -8,7 +8,7 @@ from .constants import GENDER_CHOICE
 class UserAddressForm(forms.ModelForm):
     class Meta:
         model = UserAddress
-        fields = ['street_address', 'city', 'postal_code', 'country']
+        fields = ['user', 'address_line1', 'address_line2', 'city', 'state','postal_code', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
