@@ -6,7 +6,7 @@ from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 
-from .forms import UserRegistrationForm, UserAddressForm
+from .forms import UserRegistrationForm, UserAddressForm,UserBankAccountForm
 
 def index(request):
     return render(request, 'index.html')
@@ -86,4 +86,27 @@ def register(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'register.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from .forms import UserRegistrationForm, UserBankAccountForm
+
+def register(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        account_form = UserBankAccountForm(request.POST)
+        if user_form.is_valid() and account_form.is_valid():
+            user = user_form.save()
+            bank_account = account_form.save(commit=False)
+            bank_account.user = user
+            bank_account.save()
+            return redirect('some-success-url')
+    else:
+        user_form = UserRegistrationForm()
+        account_form = UserBankAccountForm()
+
+    return render(request, 'registration/register.html', {
+        'user_form': user_form,
+        'account_form': account_form,
+    })
+
 

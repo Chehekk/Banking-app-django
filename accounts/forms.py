@@ -88,3 +88,18 @@ class UserRegistrationForm(UserCreationForm):
                 )
             )
         return user
+    
+    from django import forms
+from .models import UserBankAccount, BankAccountType
+
+class UserBankAccountForm(forms.ModelForm):
+    account_type = forms.ModelChoiceField(
+        queryset=BankAccountType.objects.all(),
+        required=True,
+        empty_label="Select Account Type"
+    )
+
+    class Meta:
+        model = UserBankAccount
+        fields = ['account_type', 'account_number', 'balance', 'gender', 'birth_date']
+
