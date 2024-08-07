@@ -110,7 +110,7 @@ class UserBankAccount(models.Model):
 
 class UserAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    address_line1 = models.CharField(max_length=255, default='Default Address', blank=True)
+    address_line1 = models.CharField(max_length=255, default='Unknown Address', blank=True)
     address_line2 = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
