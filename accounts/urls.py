@@ -22,4 +22,6 @@ urlpatterns = [
     path(
       '', views.index, name='index'
     ),
+    path('accounts/',('accounts.urls', namespace='accounts'))
+
 ]
