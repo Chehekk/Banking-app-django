@@ -122,3 +122,21 @@ class UserAddress(models.Model):
 
     def __str__(self):
         return self.user.email
+    
+    from django import forms
+from .models import User, UserBankAccount, BankAccountType
+
+from django import forms
+from .models import User, UserBankAccount, BankAccountType
+
+class UserRegistrationForm(forms.ModelForm):
+    account_type = forms.ModelChoiceField(
+        queryset=BankAccountType.objects.all(),
+        required=True,
+        empty_label="Select Account Type"
+    )
+
+    class Meta:
+        model = UserBankAccount
+        fields = ['account_type', 'account_number', 'balance']
+

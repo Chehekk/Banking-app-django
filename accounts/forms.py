@@ -34,17 +34,20 @@ class UserAddressForm(forms.ModelForm):
 
 class UserRegistrationForm(UserCreationForm):
     account_type = forms.ModelChoiceField(
-        queryset=BankAccountType.objects.all()
+        queryset=BankAccountType.objects.all(),
+        required=True,
+        empty_label="Select Account Type"
     )
     gender = forms.ChoiceField(choices=GENDER_CHOICE)
     birth_date = forms.DateField()
 
     class Meta:
-        model = User
+        model = UserBankAccount
         fields = [
             'first_name',
             'last_name',
             'email',
+            'account_type',
             'password1',
             'password2',
         ]
