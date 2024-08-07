@@ -77,7 +77,7 @@ class UserBankAccount(models.Model):
         related_name='accounts',
         on_delete=models.CASCADE
     )
-    account_no = models.PositiveIntegerField(unique=True)
+    account_number = models.PositiveIntegerField(unique=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICE)
     birth_date = models.DateField(null=True, blank=True)
     balance = models.DecimalField(
@@ -123,8 +123,6 @@ class UserAddress(models.Model):
     def __str__(self):
         return self.user.email
     
-    from django import forms
-from .models import User, UserBankAccount, BankAccountType
 
 from django import forms
 from .models import User, UserBankAccount, BankAccountType

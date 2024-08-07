@@ -48,6 +48,7 @@ class UserRegistrationForm(UserCreationForm):
             'last_name',
             'email',
             'account_type',
+            'account_number',
             'password1',
             'password2',
         ]
