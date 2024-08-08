@@ -1,17 +1,10 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model, login, logout
-from django.contrib.auth.views import LoginView
-from django.shortcuts import HttpResponseRedirect
+from django.contrib.auth import get_user_model, login
+from django.views.generic import TemplateView
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, RedirectView
 
 from .forms import UserRegistrationForm, UserAddressForm, UserBankAccountForm
-from django.shortcuts import render
-
-def index(request):
-    return render(request, 'index.html')
-
 
 User = get_user_model()
 
@@ -20,7 +13,7 @@ class UserRegistrationView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return HttpResponseRedirect(reverse_lazy('transactions:transaction_report'))
+            return redirect(reverse_lazy('transactions:transaction_report'))
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -40,7 +33,7 @@ class UserRegistrationView(TemplateView):
 
             login(self.request, user)
             messages.success(self.request, 'Thank you for creating a bank account!')
-            return HttpResponseRedirect(reverse_lazy('transactions:deposit_money'))
+            return redirect(reverse_lazy('transactions:deposit_money'))
 
         return self.render_to_response(
             self.get_context_data(
@@ -59,15 +52,3 @@ class UserRegistrationView(TemplateView):
             kwargs['bank_account_form'] = UserBankAccountForm()
 
         return super().get_context_data(**kwargs)
-
-class UserLoginView(LoginView):
-    template_name = 'accounts/user_login.html'
-    redirect_authenticated_user = True
-
-class LogoutView(RedirectView):
-    pattern_name = 'home'
-
-    def get_redirect_url(self, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            logout(self.request)
-        return super().get_redirect_url(*args, **kwargs)
