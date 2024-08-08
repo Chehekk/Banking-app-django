@@ -99,8 +99,11 @@ class UserRegistrationForm(forms.ModelForm):
     )
 
     class Meta:
-        model = UserBankAccount
-        fields = ['account_type', 'account_number', 'balance']
+        model = User
+        fields = ['email', 'password']
+        widgets = {
+            'password' : forms.PasswordInput()
+        }
 
 from accounts.models import BankAccountType
 BankAccountType.objects.all()
