@@ -66,6 +66,6 @@ class UserBankAccountForm(forms.ModelForm):
 
 class BankAccountForm(forms.ModelForm):
     class Meta:
-        model = BankAccount
+        model = BankAccountType
         fields = ['account_type', 'account_number', 'balance']
 
