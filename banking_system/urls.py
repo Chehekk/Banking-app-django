@@ -19,8 +19,15 @@ from django.urls import include, path
 from core.views import HomeView
 
 urlpatterns = [
+    # Home page
     path('', HomeView.as_view(), name='home'),
+    
+    # Accounts URLs
     path('accounts/', include('accounts.urls', namespace='accounts')),  # Only include this once
+
+    # Admin page
     path('admin/', admin.site.urls),
+    
+    # Transactions URLs
     path('transactions/', include('transactions.urls', namespace='transactions')),
 ]

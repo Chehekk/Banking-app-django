@@ -7,6 +7,11 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 
 from .forms import UserRegistrationForm, UserAddressForm, UserBankAccountForm
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'index.html')
+
 
 User = get_user_model()
 
