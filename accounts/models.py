@@ -1,11 +1,7 @@
 from decimal import Decimal
-from django.contrib.auth.models import AbstractUser, User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-
-from django.core.validators import (
-    MinValueValidator,
-    MaxValueValidator,
-)
+from django.core.validators import MinValueValidator, MaxValueValidator
 from .constants import GENDER_CHOICE
 from .managers import UserManager
 
@@ -48,35 +44,22 @@ class BankAccountType(models.Model):
         return self.name
 
     def calculate_interest(self, principal):
-        """
-        Calculate interest for each account type.
-
-        This uses a basic interest calculation formula
-        """
         p = principal
         r = self.annual_interest_rate
         n = Decimal(self.interest_calculation_per_year)
-
-        # Basic Future Value formula to calculate interest
         interest = (p * (1 + ((r/100) / n))) - p
-
         return round(interest, 2)
 
 class UserBankAccount(models.Model):
-    ACCOUNT_TYPE_CHOICES = [
-        ('FD', 'Fixed Deposit'),
-        ('SA', 'Savings Account'),
-        ('CA', 'Current Account'),
-    ]
     user = models.OneToOneField(
         User,
         related_name='account',
         on_delete=models.CASCADE,
     )
-    account_type = models.CharField(
-        max_length = 2,
-        choices = ACCOUNT_TYPE_CHOICES,
-        default = 'SA'
+    account_type = models.ForeignKey(
+        BankAccountType,
+        related_name='accounts',
+        on_delete=models.CASCADE
     )
     account_number = models.CharField(max_length=20)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICE)
@@ -94,39 +77,6 @@ class UserBankAccount(models.Model):
     def __str__(self):
         return str(self.account_number)
 
-class BankAccountType(models.Model):
-    ACCOUNT_TYPE_CHOICES = [
-        ('FD', 'Fixed Deposit'),
-        ('SA', 'Savings Account'),
-        ('CA', 'Current Account'),
-    ]
-
-    name = models.CharField(max_length=128, choices=ACCOUNT_TYPE_CHOICES)
-    maximum_withdrawal_amount = models.DecimalField(
-        decimal_places=2,
-        max_digits=12
-    )
-    annual_interest_rate = models.DecimalField(
-        validators=[MinValueValidator(0), MaxValueValidator(100)],
-        decimal_places=2,
-        max_digits=5,
-        help_text='Interest rate from 0 - 100'
-    )
-    interest_calculation_per_year = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(12)],
-        help_text='The number of times interest will be calculated per year'
-    )
-
-    def __str__(self):
-        return self.get_name_display()
-
-    def calculate_interest(self, principal):
-        p = principal
-        r = self.annual_interest_rate
-        n = Decimal(self.interest_calculation_per_year)
-        interest = (p * (1 + ((r/100) / n))) - p
-        return round(interest, 2)
-
 class UserAddress(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address_line1 = models.CharField(max_length=255, default='Unknown Address', blank=True)
@@ -135,12 +85,11 @@ class UserAddress(models.Model):
     state = models.CharField(max_length=255)
     postal_code = models.CharField(max_length=10)
 
-
     def __str__(self):
         return self.user.email
-    
+
 from django import forms
-from .models import User, UserBankAccount, BankAccountType
+from .models import UserBankAccount, BankAccountType
 
 class UserRegistrationForm(forms.ModelForm):
     account_type = forms.ModelChoiceField(
@@ -152,4 +101,3 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = UserBankAccount
         fields = ['account_type', 'account_number', 'balance']
-
