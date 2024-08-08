@@ -101,3 +101,12 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = UserBankAccount
         fields = ['account_type', 'account_number', 'balance']
+
+from accounts.models import BankAccountType
+BankAccountType.objects.all()
+
+BankAccountType.objects.create(name='Fixed Deposit', maximum_withdrawal_amount=10000, annual_interest_rate=5, interest_calculation_per_year=1)
+BankAccountType.objects.create(name='Savings Account', maximum_withdrawal_amount=5000, annual_interest_rate=3, interest_calculation_per_year=12)
+BankAccountType.objects.create(name='Current Account', maximum_withdrawal_amount=2000, annual_interest_rate=1, interest_calculation_per_year=4)
+
+
