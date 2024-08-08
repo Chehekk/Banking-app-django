@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from .models import User, BankAccountType, UserBankAccount, UserAddress
+from .models import User, BankAccountType, UserBankAccount, UserAddress, BankAccount
 from .constants import GENDER_CHOICE
 
 class UserAddressForm(forms.ModelForm):
@@ -63,3 +63,9 @@ class UserBankAccountForm(forms.ModelForm):
     class Meta:
         model = UserBankAccount
         fields = ['account_type', 'account_number', 'balance', 'gender', 'birth_date']
+
+class BankAccountForm(forms.ModelForm):
+    class Meta:
+        model = BankAccount
+        fields = ['account_type', 'account_number', 'balance']
+
