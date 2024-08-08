@@ -59,6 +59,11 @@ class UserBankAccountForm(forms.ModelForm):
         required=True,
         empty_label="Select Account Type"
     )
+    birth_date = forms.DateField(
+        widget=forms.DateInput(format='%d-%m-%Y', attrs={'placeholder': 'DD-MM-YYYY'}),
+        input_formats=['%d-%m-%Y'],
+        required=True,
+    )
 
     class Meta:
         model = UserBankAccount
