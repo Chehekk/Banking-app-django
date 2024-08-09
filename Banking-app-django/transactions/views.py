@@ -14,6 +14,20 @@ from transactions.forms import (
 )
 from transactions.models import Transaction
 
+from django.core.exceptions import ObjectDoesNotExist
+
+class TransactionReportView(ListView):
+    model = Transaction
+
+    def get_queryset(self):
+        try:
+            account = self.request.user.account
+        except ObjectDoesNotExist:
+            # Handle the case where the user has no account
+            return Transaction.objects.none()  # or handle it differently, e.g., redirect or show a message
+
+        return Transaction.objects.filter(account=account)
+
 
 class TransactionRepostView(LoginRequiredMixin, ListView):
     template_name = 'transactions/transaction_report.html'
