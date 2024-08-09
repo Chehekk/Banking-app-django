@@ -1,4 +1,6 @@
 {% extends 'core/base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +12,23 @@
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <form method="post" action="{% url 'accounts:user_registration' %}" class="bg-white p-6 rounded shadow-md">
         {% csrf_token %}
-        
+
+        <!-- User Information Section -->
+        <h2 class="text-lg font-bold mb-4">User Information</h2>
+        {{ user_form.as_p }}
+
+        <!-- Bank Account Information Section -->
+        <h2 class="text-lg font-bold mt-6 mb-4">Bank Account Information</h2>
         {{ registration_form.as_p }}
-        {{ bank_account_form.as_p }}
+
+        <!-- Address Information Section -->
+        <h2 class="text-lg font-bold mt-6 mb-4">Address Information</h2>
+        {{ address_form.as_p }}
         
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-6">
             Register
         </button>
     </form>
 </body>
 </html>
+{% endblock %}
