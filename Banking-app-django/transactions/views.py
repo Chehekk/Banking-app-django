@@ -18,6 +18,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class TransactionReportView(ListView):
     model = Transaction
+    template_name = 'transactions/report.html'
 
     def get_queryset(self):
         try:
