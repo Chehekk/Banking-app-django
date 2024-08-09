@@ -29,7 +29,10 @@ class UserRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2']
+        fields = ['email','password']
+        widgets = {
+            'password': forms.PasswordInput()
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

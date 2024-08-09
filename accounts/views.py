@@ -6,16 +6,16 @@ from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse_lazy
 
 from django.views.generic import TemplateView, RedirectView
-
+from django.views.generic.edit import FormView
 from .forms import UserRegistrationForm, UserAddressForm, UserBankAccountForm
+from .models import UserBankAccount
 
 def index(request):
     return render(request, 'index.html')
 
 User = get_user_model()
 
-class UserRegistrationView(TemplateView):
-    model = User
+class UserRegistrationView(FormView):
     form_class = UserRegistrationForm
     template_name = 'accounts/user_registration.html'
 
@@ -25,6 +25,14 @@ class UserRegistrationView(TemplateView):
                 reverse_lazy('transactions:transaction_report')
             )
         return super().dispatch(request, *args, **kwargs)
+    
+    def get(self, request, *args, **kwargs):
+        registration_form = self.form_class()
+        bank_account_form = UserBankAccountForm()
+        return self.render_to_response(self.get_context_data(
+            registration_form=registration_form,
+            bank_account_form=bank_account_form
+        ))
 
     def post(self, request, *args, **kwargs):
         registration_form = UserRegistrationForm(self.request.POST)
@@ -50,8 +58,7 @@ class UserRegistrationView(TemplateView):
                 registration_form=registration_form,
                 address_form=address_form,
                 bank_account_form=bank_account_form
-            )
-        )
+            ))
 
     def get_context_data(self, **kwargs):
         if 'registration_form' not in kwargs:
