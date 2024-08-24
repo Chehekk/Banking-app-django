@@ -1,4 +1,4 @@
-# Online Banking System V2.0.2
+# Online Banking Application
 
 This is an Online Banking Concept created using Django Web Framework.
 
@@ -35,23 +35,14 @@ Be sure you have the following installed on your development machine:
 + python-dateutil==2.8.1
 + redis==3.5.3
 
-## Install Redis Server
-
-[Redis Quick Start](https://redis.io/topics/quickstart)
-
-Run Redis server
-```bash
-redis-server
-```
-
 ## Project Installation
 
 To setup a local development environment:
 
 Create a virtual environment in which to install Python pip packages. With [virtualenv](https://pypi.python.org/pypi/virtualenv),
 ```bash
-virtualenv venv            # create a virtualenv
-source venv/bin/activate   # activate the Python virtualenv 
+myenv\Scripts\activate         # create a virtualenv in windows
+source venv/bin/activate   # activate the Python virtualenv in mac/linux
 ```
 
 or with [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/),
@@ -62,7 +53,7 @@ workon {{project_name}}   # reactivate existing environment
 
 Clone GitHub Project,
 ```bash
-git@github.com:saadmk11/banking-system.git
+git@github.com:Chehekk/Banking-app-django.git
 
 cd banking-system
 ```
@@ -96,6 +87,4 @@ celery -A banking_system beat -l info
 ```
 
 ## Images:
-![alt text](https://i.imgur.com/FvgmEJL.png)
-#
-![alt text](https://i.imgur.com/aWzj44Y.png)
+
