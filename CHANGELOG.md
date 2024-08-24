@@ -1,4 +1,4 @@
-# Version: 2.0.2
+# Version: 5.1
 
 * [#46](https://github.com/Chehekk/Banking-app-django/pull/46): Bump django from 3.1.8 to 3.1.9
 * [#22](https://github.com/Chehekk/Banking-app-django/pull/22): Bump django from 3.1.1 to 3.1.2
