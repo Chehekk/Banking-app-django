@@ -21,26 +21,25 @@ This is an Online Banking Concept created using Django Web Framework.
 
 Be sure you have the following installed on your development machine:
 
-+ Python >= 3.7
-+ Redis Server
++ Python >= 3.12
 + Git
 + pip
 + Virtualenv (virtualenvwrapper is recommended)
 
 ## Requirements
 
-+ celery==4.4.7
-+ Django==3.2
-+ django-celery-beat==2.0.0
-+ python-dateutil==2.8.1
-+ redis==3.5.3
++ celery==5.4.0
++ Django==3.2.9
++ django-celery-beat==2.1.0
++ python-dateutil==2.8.2
+
 
 ## Project Installation
 
 To setup a local development environment:
 
-Create a virtual environment in which to install Python pip packages. With [virtualenv](https://pypi.python.org/pypi/virtualenv),
-```bash
+Create a virtual environment in which to install Python pip packages.
+```bash/cmd
 myenv\Scripts\activate         # create a virtualenv in windows
 source venv/bin/activate   # activate the Python virtualenv in mac/linux
 ```
